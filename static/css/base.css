@@ -1,0 +1,75 @@
+/* Шапка на всю ширину */
+header {
+    width: 100%;
+}
+
+/* Аватарка с ободком */
+.avatar-img {
+    border: 4px solid transparent;
+    background-image: linear-gradient(270deg,
+        #FF6D00,
+        #C6FF00,
+        #7C4DFF,
+        #00E5FF,
+        #FF2E9A
+    );
+    background-size: 1000% 1000%;
+    border-radius: 50%;
+    animation: gradient-animation 30s linear infinite;
+}
+
+/* Плавная анимация для ободка */
+@keyframes gradient-animation {
+    0% { background-position: 0% 100%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 100%; }
+}
+
+/* Панель с кнопками */
+.avatar-panel {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 250px;
+    height: 250px;
+    background-color: #343a40;
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: -3px 0 15px rgba(0, 0, 0, 0.2);
+    padding: 22px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+/* Когда чекбокс активен, показываем меню */
+#avatar-toggle:checked + label + .avatar-panel {
+    display: block;
+}
+
+/* Стили для кнопок */
+.avatar-panel .btn {
+    margin-bottom: 10px;
+}
+
+.avatar-panel .btn-danger {
+    background-color: #e74c3c;
+}
+
+.small-btn {
+    font-size: 0.85rem;
+    padding: 4px 12px;
+}
+
+.login-btn:hover {
+    background-color: #e2e6ea;
+    transform: scale(1.03);
+    transition: all 0.2s ease-in-out;
+}
+
+.register-btn:hover {
+    background-color: #ffc107;
+    color: black;
+    transform: scale(1.03);
+    transition: all 0.3s ease-in-out;
+}

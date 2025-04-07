@@ -14,20 +14,33 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=365)
 
+db_sess = None
+
 
 @app.route('/')
-@app.route('/home')
 def base_win():
-    return render_template('base.html')
+    global db_sess
+    id = session.get('id', None)
+    if id:
+        user = db_sess.query(User).filter(User.id == id).first()
+        return render_template(
+            'base.html',
+            user_authenticated=True,
+            username=user.username,
+            avatar_url=user.avatar
+        )
+    else:
+        return render_template(
+            'base.html',
+            user_authenticated=False
+        )
 
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    usr_data = [session.get('id', None), session.get('email', None), session.get('password', None)]
+    global db_sess
     form = RegistrationForm()
     if form.validate_on_submit():
-        db_sess = db_session.create_session()
-
         # Получаем данные регестрации
         username = form.username.data
         email = form.email.data
@@ -37,12 +50,12 @@ def register():
         check_username = db_sess.query(User).filter(User.username == username).first()
         if check_username:
             flash('Пользователь с таким именем уже существует!', category='error_username')
-            return redirect(url_for('register'))
+            return render_template('registration.html', form=form)
 
         check_email = db_sess.query(User).filter(User.email == email).first()
         if check_email:
             flash('Пользователь с таким email уже существует!', category='error_email')
-            return redirect(url_for('register'))
+            return render_template('registration.html', form=form)
 
         # Хешируем пароль
         hashed_password = generate_password_hash(password)
@@ -60,8 +73,6 @@ def register():
         db_sess.commit()
 
         session['id'] = new_user.id
-        session['email'] = new_user.email
-        session['password'] = new_user.hashed_password
 
         return redirect('/')
 
@@ -72,14 +83,40 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        # логика входа (проверка email/пароля, сессии и т.п.)
-        flash('Успешный вход!', 'success')
-        return redirect(url_for('profile'))  # или куда нужно
+        email = form.email.data
+        password = form.password.data
+        remember = form.remember.data
+
+        # Здесь будет логика проверки пользователя
+        if email == "admin@example.com" and password == "123456":
+            flash('Вы вошли!', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Неверный email или пароль.', 'danger')
+
     return render_template('login.html', form=form)
 
 
+@app.route('/check', methods=['POST', 'GET'])
+def regist():
+    form = RegistrationForm()
+    print(session.get('id'))
+    return render_template('registration.html', form=form)
+
+
+@app.route('/exit', methods=['GET'])
+def exit():
+    session.pop('id')
+    return render_template(
+        'base.html',
+        user_authenticated=False
+    )
+
+
 def main():
+    global db_sess
     db_session.global_init("db/data.db")
+    db_sess = db_session.create_session()
     app.run(host='0.0.0.0', port=8080, debug=True)
 
 
