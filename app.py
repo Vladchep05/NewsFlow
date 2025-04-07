@@ -1,7 +1,8 @@
 from datetime import timedelta
 
 from flask import Flask, render_template, redirect, url_for, flash, session
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+import base64
 
 from data import db_session
 from data.users import User
@@ -23,11 +24,13 @@ def base_win():
     id = session.get('id', None)
     if id:
         user = db_sess.query(User).filter(User.id == id).first()
+        avatar_data = base64.b64encode(user.avatar).decode('utf-8')
+        avatar_url = f"data:image/png;base64,{avatar_data}"
         return render_template(
             'base.html',
             user_authenticated=True,
             username=user.username,
-            avatar_url=user.avatar
+            avatar_url=avatar_url
         )
     else:
         return render_template(
@@ -79,22 +82,21 @@ def register():
     return render_template('registration.html', form=form)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    global db_sess
     form = LoginForm()
     if form.validate_on_submit():
-        email = form.email.data
+        name = form.username.data
         password = form.password.data
-        remember = form.remember.data
-
-        # Здесь будет логика проверки пользователя
-        if email == "admin@example.com" and password == "123456":
-            flash('Вы вошли!', 'success')
-            return redirect(url_for('home'))
+        user = db_sess.query(User).filter(User.username == name).first()
+        if user and check_password_hash(user.hashed_password, password):
+            # login_user(user, remember=form.remember.data)
+            session['id'] = user.id
+            return redirect('/')
         else:
-            flash('Неверный email или пароль.', 'danger')
-
-    return render_template('login.html', form=form)
+            flash("Неверное имя пользователя или пароль", "danger")
+    return render_template("login.html", form=form)
 
 
 @app.route('/check', methods=['POST', 'GET'])

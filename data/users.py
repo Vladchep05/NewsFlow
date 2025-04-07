@@ -18,4 +18,6 @@ class User(SqlAlchemyBase):
     with open('static/img/default.jpg', 'rb') as file:
         img = file.read()
 
+
+
     avatar = sqlalchemy.Column(sqlalchemy.LargeBinary, default=img)
