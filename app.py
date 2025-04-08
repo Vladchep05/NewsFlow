@@ -13,7 +13,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '8200692859261968036'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=365)
 
 db_sess = None
 
@@ -91,8 +90,14 @@ def login():
         password = form.password.data
         user = db_sess.query(User).filter(User.username == name).first()
         if user and check_password_hash(user.hashed_password, password):
-            # login_user(user, remember=form.remember.data)
             session['id'] = user.id
+            remember = form.remember.data
+            if remember:
+                global app
+                session.permanent = True
+                app.permanent_session_lifetime = timedelta(days=365)
+            else:
+                session.permanent = False
             return redirect('/')
         else:
             flash("Неверное имя пользователя или пароль", "danger")

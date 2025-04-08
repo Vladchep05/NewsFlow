@@ -1,33 +1,103 @@
-/* Шапка на всю ширину */
+/* Фон шапки */
 header {
-    width: 100%;
+    background: linear-gradient(135deg, #3b3b3b, #212121); /* Темный градиент */
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Аватарка с ободком */
+/* Логотип */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: transform 0.5s ease;
+}
+
+h1:hover {
+    transform: scale(1.08);
+}
+
+/* Стили для навигации */
+.navbar-nav {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.custom-nav-link {
+    padding: 10px 20px;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    position: relative;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.custom-nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffcc00;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Добавим подчеркивание для активных ссылок */
+.custom-nav-link::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -4px;
+    left: 20%;
+    width: 60%;
+    height: 2px;
+    background: #ffcc00;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.4s ease;
+}
+
+.custom-nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* Стиль для кнопок входа и регистрации */
+.small-btn {
+    font-size: 0.9rem;
+    padding: 5px 14px;
+    border-radius: 25px;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-btn:hover, .register-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Стиль для аватарки и панели */
 .avatar-img {
     border: 4px solid transparent;
-    background-image: linear-gradient(270deg,
-        #FF6D00,
-        #C6FF00,
-        #7C4DFF,
-        #00E5FF,
-        #FF2E9A
-    );
+    background-image: linear-gradient(270deg, #FF6D00, #C6FF00, #7C4DFF, #00E5FF, #FF2E9A);
     background-size: 1000% 1000%;
     border-radius: 50%;
     animation: gradient-animation 30s linear infinite;
+    transition: transform 0.3s ease;
 }
 
-/* Плавная анимация для ободка */
+.avatar-img:hover {
+    transform: scale(1.08);
+}
+
+/* Анимация для аватара */
 @keyframes gradient-animation {
     0% { background-position: 0% 100%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 100%; }
 }
 
-/* Панель с кнопками */
+/* Панель с кнопками (анимированное появление) */
 .avatar-panel {
-    display: none;
     position: absolute;
     top: 60px;
     right: 0;
@@ -36,40 +106,19 @@ header {
     background-color: #343a40;
     color: white;
     border-radius: 0.5rem;
-    box-shadow: -3px 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
     padding: 22px;
     z-index: 1000;
-    transition: all 0.3s ease;
+
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+    pointer-events: none;
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); /* пружинистая анимация */
 }
 
-/* Когда чекбокс активен, показываем меню */
+/* Показ при активации */
 #avatar-toggle:checked + label + .avatar-panel {
-    display: block;
-}
-
-/* Стили для кнопок */
-.avatar-panel .btn {
-    margin-bottom: 10px;
-}
-
-.avatar-panel .btn-danger {
-    background-color: #e74c3c;
-}
-
-.small-btn {
-    font-size: 0.85rem;
-    padding: 4px 12px;
-}
-
-.login-btn:hover {
-    background-color: #e2e6ea;
-    transform: scale(1.03);
-    transition: all 0.2s ease-in-out;
-}
-
-.register-btn:hover {
-    background-color: #ffc107;
-    color: black;
-    transform: scale(1.03);
-    transition: all 0.3s ease-in-out;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
 }
