@@ -3,17 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Вход</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
-<div class="container">
+<!-- Контейнер с анимацией частиц -->
+<div id="particles-js"></div>
 
-    <div class="logo">
-        📰 NewsFlow
+<!-- Основной контейнер -->
+<div class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
+
+    <div class="logo mb-4">
+        📰 <span>NewsFlow</span>
     </div>
 
-    <div class="card p-4 col-md-6 mx-auto">
+    <div class="neon-card card p-4 col-md-6 col-lg-5 col-xl-4 shadow-lg">
         <h2 class="text-center mb-4 heading-title">Вход</h2>
 
         <form method="POST">
@@ -42,7 +51,7 @@
 
             <div class="d-flex justify-content-between">
                 <a href="/" class="btn btn-outline-light">← На главную</a>
-                <button type="submit" class="btn btn-outline-light">Войти</button>
+                <button type="submit" class="btn btn-outline-info">Войти</button>
             </div>
         </form>
 
@@ -52,5 +61,9 @@
         </p>
     </div>
 </div>
+
+<!-- Скрипт для частиц -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
 </body>
 </html>

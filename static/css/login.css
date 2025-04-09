@@ -1,114 +1,88 @@
-body {
-    background: linear-gradient(270deg,
-        #A3BFD9,
-        #88A2B9,
-        #8CA9C4,
-        #9DB5C9,
-        #B0BCCB,
-        #96AFCF,
-        #A9C3C2,
-        #B7C9D5,
-        #7A9CA5,
-        #90AFC5
-    );
-    background-size: 1200% 1200%;
-    animation: smoothGradient 180s ease infinite;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #2c3e50;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Фоновая анимация частиц */
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
 }
 
-@keyframes smoothGradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+/* Основной контейнер поверх анимации */
+.container {
+    position: relative;
+    z-index: 10;
 }
 
-.card {
-    border-radius: 1rem;
-    box-shadow: 0 0 30px rgba(0,0,0,0.3);
-    background-color: rgba(255,255,255,0.025);
+/* Лого */
+.logo {
+    font-size: 2.6rem;
+    font-weight: bold;
+    color: #00ffe0;
+    -webkit-text-stroke: 1px #000; /* чёрная обводка */
+    text-shadow:
+        0 0 5px #00ffe0,
+        0 0 10px #00ffe0,
+        0 0 15px #00ffe0,
+        2px 2px 2px rgba(0, 0, 0, 0.7); /* лёгкая тень для читаемости */
+}
+
+/* Заголовок */
+.heading-title {
+    color: #ffffff;
+    text-shadow: 0 0 10px #00ffe0;
+}
+
+/* Карточка формы */
+.neon-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #00ffe0;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 255, 224, 0.4),
+                0 0 40px rgba(0, 255, 224, 0.2),
+                inset 0 0 10px rgba(0, 255, 224, 0.3);
     backdrop-filter: blur(10px);
-}
-
-.form-label {
-    color: #FFE4E1;
-}
-
-.form-control {
-    background-color: rgba(255,255,255,0.2);
     color: white;
-    border: none;
-    padding: 0.8rem 1rem;
-    border-radius: 0.5rem;
+}
+
+/* Элементы формы */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid #00ffe0;
+    color: #ffffff;
+    border-radius: 8px;
 }
 
 .form-control::placeholder {
-    color: rgba(255,255,255,0.6);
+    color: #cccccc;
 }
 
-.form-check-label {
-    color: #ddd;
+.form-control:focus {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-color: #00ffe0;
+    box-shadow: 0 0 10px #00ffe0;
+    color: white;
 }
 
-.heading-title {
-    color: #FFF8E7;
+/* Кнопки */
+.btn-outline-light, .btn-outline-info {
+    border-radius: 10px;
+    transition: all 0.4s ease-in-out;
 }
 
-.heading-title:hover {
-    transform: scale(1.02);
+.btn-outline-info:hover {
+    background-color: #00ffe0;
+    color: #000;
+    box-shadow: 0 0 10px #00ffe0;
 }
 
-.d-flex .btn {
-    width: 48%;
+/* Ссылки */
+a {
+    color: #00ffe0;
 }
 
-.logo {
-    color: #EAE6CA;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 30px 0 10px;
+a:hover {
+    text-shadow: 0 0 10px #00ffe0;
 }
 
-.logo:hover {
-    transform: scale(1.08);
-}
-
-.flash.danger {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    margin-top: 1rem;
-    text-align: center;
-}
-
-/* Стилизация чекбокса */
-.custom-checkbox .form-check-input {
-    width: 1.3rem;
-    height: 1.3rem;
-    background-color: transparent;
-    border: 2px solid #ccc;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    margin-right: 0.5rem;
-}
-
-.custom-checkbox .form-check-input:checked {
-    background-color: #3C5A72;
-    border-color: #3C5A72;
-}
-
-.custom-checkbox .form-check-input:focus {
-    box-shadow: 0 0 0 0.2rem rgba(60, 90, 114, 0.25);
-}
-
-.custom-checkbox .form-check-label {
-    color: #E0E0E0;
-    cursor: pointer;
-    user-select: none;
-}

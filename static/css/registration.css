@@ -1,119 +1,136 @@
+/* Фоновый градиент страницы */
 body {
-    background: linear-gradient(270deg,
-        #1F0E11,
-        #1E2B3C,
-        #2F4F4F,
-        #102C54,
-        #2B2B2B,
-        #2C5364,
-        #3C3F41,
-        #0F2027,
-        #203A43,
-        #16222A,
-        #1B2735,
-        #2E3A59,
-        #1C1C1C,
-        #3A6073,
-        #082567
-    );
-    background-size: 1200% 1200%;
-    animation: smoothGradient 180s ease infinite;
+    background: linear-gradient(135deg, #1a0033, #330033, #660033);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #2c3e50;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+body.loaded {
+    opacity: 1;
 }
 
-@keyframes smoothGradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+/* Логотип */
+.logo {
+    font-size: 2.6rem !important;
+    font-weight: bold;
+    color: #ff00ff;
+    -webkit-text-stroke: 1px #000;
+    text-shadow: 0 0 6px #ff00ff, 0 0 12px #ff00ff;
 }
 
-.card {
-    border-radius: 1rem;
-    box-shadow: 0 0 30px rgba(0,0,0,0.3);
-    background-color: rgba(255,255,255,0.025);
-    backdrop-filter: blur(10px);
+/* Заголовок */
+.heading-title {
+    color: #ffccff;
+    text-shadow: 0 0 10px #ff00ff;
 }
 
+/* Обертка формы с неоновым оформлением и "частицами" */
+.form-wrapper {
+    background-color: rgba(20, 0, 30, 0.75);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 0, 255, 0.3);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.3),
+                0 0 30px rgba(255, 0, 255, 0.2);
+}
+
+/* Псевдо-частицы (движущиеся блёстки) */
+.form-wrapper::before,
+.form-wrapper::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255, 0, 255, 0.5) 40%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: float 6s linear infinite;
+    z-index: 1;
+}
+.form-wrapper::before {
+    top: -30px;
+    left: -30px;
+}
+.form-wrapper::after {
+    bottom: -30px;
+    right: -30px;
+    animation-delay: 3s;
+}
+
+/* Чтобы содержимое не было перекрыто псевдоэлементами */
+.form-wrapper > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Метки */
 .form-label {
-    color: #FFE4E1;
+    color: #ffc0ff;
 }
 
+/* Поля ввода */
 .form-control,
 .form-select {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-    border: none;
+    background-color: #1f002b;
+    border: 1px solid #ff00ff;
+    color: #ffffff;
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.3) inset;
 }
 
-.form-control {
-    background-color: rgba(255,255,255,0.2);
-}
-
+/* Цвет плейсхолдера — почти белый, между белым и серым */
 .form-control::placeholder {
-    color: rgba(255,255,255,0.6);
+    color: #e5e5e5;
+    opacity: 0.8;
 }
 
-.form-select {
-    border-radius: 0.5rem;
-    padding: 0.8rem 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    appearance: none;
-}
-
+.form-control:focus,
 .form-select:focus {
-    outline: none;
-    box-shadow: 0 0 10px rgba(52, 152, 219, 0.6);
+    border-color: #ff66ff;
+    box-shadow: 0 0 10px #ff66ff;
+    background-color: #1f002b;
+    color: #fff;
 }
 
-.form-select option {
-    background-color: rgba(0, 0, 0, 0.8);
+/* Кнопки */
+.btn-outline-light {
+    border: 1px solid #ff00ff;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+.btn-outline-light:hover {
+    background: #ff00ff;
+    color: black;
+    box-shadow: 0 0 10px #ff00ff;
 }
 
-.form-select option:first-child {
-    color: rgba(255,255,255,0.6);
+/* Ссылка "Войти" (текстовая ссылка) */
+.text-decoration-underline.text-info {
+    color: #ff4eb5;
+    cursor: pointer;
+     transition: color 0.3s ease;
+}
+.text-decoration-underline.text-info:hover {
+    color:  #ffc8ec;
+    text-shadow: 0 0 5px #ff66c4;
 }
 
-.heading-title {
-    color: #FFF8E7;
-}
-
-.heading-title:hover {
-    transform: scale(1.02);
-}
-
-.btn-back {
-    background-color: #3498db;
-    border: none;
-    color: white;
-}
-
-.btn-back:hover {
-    background-color: #2B6CC4;
-}
-
-.d-flex .btn {
-    width: 48%;
-}
-
-.logo {
-    color: #EAE6CA;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 30px 0 10px;
-}
-
-.logo:hover {
-    transform: scale(1.08);
-}
-
-.flash.error_email,
-.flash.error_username {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+/* Анимация для псевдо-частиц */
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(20px, 20px) scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
 }

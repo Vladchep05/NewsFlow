@@ -26,7 +26,7 @@ h1:hover {
 
 .custom-nav-link {
     padding: 10px 20px;
-    color: #ffffff;
+    color: #dadada !important;
     font-weight: 600;
     text-transform: uppercase;
     position: relative;
@@ -37,7 +37,7 @@ h1:hover {
 
 .custom-nav-link:hover {
     background: rgba(255, 255, 255, 0.1);
-    color: #ffcc00;
+    color: #ffffff !important;
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
