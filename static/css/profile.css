@@ -1,0 +1,102 @@
+/* Основной стиль для тела страницы */
+body {
+    background-color: #1f1f1f; /* Темный фон */
+    color: #b0b0b0; /* Светло-серый цвет текста для контраста */
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Стили для контейнера профиля */
+.container {
+    margin-top: 50px;
+}
+
+/* Стили для карточки с профилем */
+.card {
+    background-color: #2c2c2c; /* Темный фон карточки */
+    border: 1px solid #3a3a3a; /* Мрачная граница */
+    color: #fff; /* Белый текст на темном фоне */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Легкая тень */
+}
+
+/* Стили для изображения аватара */
+.card img {
+    border-radius: 50%;
+    border: 3px solid #444; /* Тонкая граница вокруг аватара */
+}
+
+/* Заголовок профиля */
+.card-title {
+    font-size: 2.5rem;
+    color: #f2f2f2; /* Светлый цвет заголовка */
+    margin-bottom: 20px;
+}
+
+/* Стили для меток (сильных элементов) */
+.card p strong {
+    color: #aaa; /* Меланхоличный светло-серый цвет для меток */
+}
+
+/* Стили для кнопки редактирования */
+.btn {
+    background-color: #555; /* Темная кнопка */
+    border: 1px solid #666; /* Граница с темным оттенком */
+    color: #ddd; /* Светлый текст на кнопке */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+/* Наведение на кнопку */
+.btn:hover {
+    background-color: #444; /* Более темный оттенок на hover */
+    color: #fff; /* Белый текст при наведении */
+}
+
+/* Меланхоличное сообщение */
+.text-muted {
+    color: #7a7a7a; /* Тусклый текст для сообщения */
+}
+
+/* Общие стили для блоков с текстом */
+.card-body p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/* Стили для текста в карточке */
+.card-body h4 {
+    font-size: 1.75rem;
+    margin-top: 10px;
+}
+
+/* Стили для ссылки редактирования */
+.card-body a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.card-body a:hover {
+    color: #fff;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 1.5s ease-out;
+}

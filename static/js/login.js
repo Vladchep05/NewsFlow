@@ -1,7 +1,9 @@
+const randomParticleCount = Math.floor(Math.random() * (200 - 80 + 1)) + 80; // Случайное число от 80 до 200
+
 particlesJS("particles-js", {
             "particles": {
                 "number": {
-                    "value": 80,
+                    "value": randomParticleCount,
                     "density": {
                         "enable": true,
                         "value_area": 800

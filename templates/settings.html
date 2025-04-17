@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Настройки{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Левая панель с кнопками настроек -->
+        <div class="col-md-3">
+            <div class="settings-sidebar">
+                <button id="profile-settings-btn" class="settings-btn active-btn">Настройки профиля</button>
+                <button id="general-settings-btn" class="settings-btn">Общие настройки</button>
+                <button id="theme-settings-btn" class="settings-btn">Настройки темы</button>
+                <button id="font-settings-btn" class="settings-btn">Настройки шрифта</button>
+                <button id="logout-btn" class="settings-btn">Выйти</button>
+            </div>
+        </div>
+
+        <!-- Правая панель с содержимым -->
+        <div class="col-md-9">
+            <div id="profile-settings-content" class="content-section active">
+                <h2>Настройки профиля</h2>
+                <form id="profile-form">
+                    <label for="username">Имя пользователя:</label>
+                    <input type="text" id="username" name="username" class="form-control mb-3" placeholder="Введите имя пользователя" required>
+
+                    <label for="bio">О себе:</label>
+                    <textarea id="bio" name="bio" class="form-control mb-3" placeholder="Напишите о себе" required></textarea>
+
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+
+            <div id="general-settings-content" class="content-section">
+                <h2>Общие настройки</h2>
+                <form id="general-form">
+                    <label for="language">Язык:</label>
+                    <select id="language" name="language" class="form-control mb-3">
+                        <option value="en">English</option>
+                        <option value="ru">Русский</option>
+                    </select>
+
+                    <label for="notifications">Уведомления:</label>
+                    <input type="checkbox" id="notifications" name="notifications" class="form-check-input mb-3"> Включить уведомления
+
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+
+            <div id="theme-settings-content" class="content-section">
+                <h2>Настройки темы</h2>
+                <form id="theme-form">
+                    <label for="theme">Выберите тему:</label>
+                    <select id="theme" name="theme" class="form-control mb-3">
+                        <option value="light">Светлая</option>
+                        <option value="dark">Темная</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+
+            <div id="font-settings-content" class="content-section">
+                <h2>Настройки шрифта</h2>
+                <form id="font-form">
+                    <label for="font-size">Размер шрифта:</label>
+                    <select id="font-size" name="font-size" class="form-control mb-3">
+                        <option value="small">Маленький</option>
+                        <option value="medium">Средний</option>
+                        <option value="large">Большой</option>
+                    </select>
+
+                    <label for="font-family">Шрифт:</label>
+                    <select id="font-family" name="font-family" class="form-control mb-3">
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Roboto">Roboto</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+
+            <div id="logout-content" class="content-section">
+                <h2>Выход</h2>
+                <p>Вы хотите выйти из системы?</p>
+                <button class="btn btn-danger">Выйти</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}

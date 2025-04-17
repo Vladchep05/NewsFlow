@@ -1,16 +1,35 @@
-/* Фоновый градиент страницы */
 body {
-    background: linear-gradient(135deg, #1a0033, #330033, #660033);
+    background: radial-gradient(ellipse at center, #1a0033 0%, #330033 40%, #660033 100%);
+    background-size: 400% 400%;
+    animation: backgroundShift 15s ease infinite;
+
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+
     overflow: hidden;
+
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity 0.8s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 body.loaded {
     opacity: 1;
+}
+
+/* Анимация фона — мягкий движущийся перелив */
+@keyframes backgroundShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* Логотип */
@@ -110,7 +129,7 @@ body.loaded {
 
 /* Ссылка "Войти" (текстовая ссылка) */
 .text-decoration-underline.text-info {
-    color: #ff4eb5;
+    color: #ff4eb5 !important;
     cursor: pointer;
      transition: color 0.3s ease;
 }
@@ -133,4 +152,39 @@ body.loaded {
         transform: translate(0, 0) scale(1);
         opacity: 1;
     }
+}
+
+/* === СООБЩЕНИЯ ОБ ОШИБКАХ === */
+.form-error {
+    background-color: rgba(255, 0, 0, 0.6); /* Красный фон с полупрозрачностью */
+    color: #fff; /* Белый цвет текста */
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid #ff0000; /* Красная рамка */
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); /* Неоновое свечение красного цвета */
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000; /* Тень для текста */
+    font-size: 1rem;
+    margin-top: 5px; /* Отступ сверху */
+    margin-bottom: 15px;
+    animation: glow-error 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow-error {
+    0% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.6); }
+    100% { box-shadow: 0 0 30px rgba(255, 0, 0, 1); }
+}
+
+/* === СООБЩЕНИЯ ОБ ОШИБКАХ (для разных типов) === */
+.form-error.username-exists {
+    background-color: rgba(255, 165, 0, 0.6); /* Оранжевый для ошибки с именем */
+    border: 1px solid #ffaa00;
+    box-shadow: 0 0 15px rgba(255, 165, 0, 0.8);
+    text-shadow: 0 0 5px #ffaa00, 0 0 10px #ffaa00;
+}
+
+.form-error.invalid-email {
+    background-color: rgba(0, 255, 255, 0.6); /* Голубой для ошибки с email */
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
 }

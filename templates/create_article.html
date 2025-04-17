@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Создать статью{% endblock %}
+
+{% block links %}
+<link href="https://fonts.googleapis.com/css2?family=Arial&family=Courier+New&family=Verdana&family=Times+New+Roman&family=Poppins&display=swap"
+      rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create_article.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h2 class="form-title">📝 Создание статьи</h2>
+
+    <form action="/create_article" method="POST" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Title Field -->
+                <div class="glass-form m-4">
+                    <label for="title" class="form-label">Заголовок</label>
+                    <input type="text"
+                           class="form-control font-preview"
+                           id="title"
+                           name="title"
+                           placeholder="Введите заголовок"
+                           value="{{ title | default('') }}"
+                           required>
+                    <div id="title-error" class="text-danger mt-1"></div>
+                </div>
+
+                <!-- Content Field -->
+                <div class="glass-form m-4">
+                    <label for="content" class="form-label">Содержание</label>
+                    <textarea
+                            class="custom-textarea font-preview"
+                            id="content" name="content" rows="15" style="height: 60vh;"
+                            placeholder="Введите текст статьи..." required>{{ content | default('') }}</textarea>
+                    <div id="content-error" class="text-danger mt-1"></div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Image Upload Section -->
+                <div class="glass-form m-4">
+                    <label class="form-label">Изображения</label>
+
+                    <button type="button" class="custom-upload-btn" id="customUploadBtn">📁 Загрузить изображения
+                    </button>
+                    <input class="form-control d-none" type="file" id="images" name="images" multiple accept="image/*">
+
+                    <div class="image-preview" id="imagePreview"></div>
+                    <div id="imageError" class="text-danger mt-2"></div>
+                </div>
+
+                <!-- Font Picker -->
+                <div class="glass-form m-4">
+                    <label for="font" class="form-label px-2">Шрифт статьи</label>
+                    <select id="font"
+                            class="font-picker p-2"
+                            name="font">
+                        <option value="">-- Выберите шрифт --</option>
+                        <option value="Arial" {% if font=='Arial' %}selected{% endif %}>Arial</option>
+                        <option value="Courier New" {% if font=='Courier New
+                        ' %}selected{% endif %}>Courier New</option>
+                        <option value="Verdana" {% if font=='Verdana' %}selected{% endif %}>Verdana</option>
+                        <option value="Times New Roman" {% if font=='Times New Roman
+                        ' %}selected{% endif %}>Times New Roman</option>
+                        <option value="Poppins" {% if font=='Poppins' %}selected{% endif %}>Poppins</option>
+                    </select>
+                    <div id="font-error" class="text-danger mt-1"></div>
+                </div>
+
+                <!-- Comments Checkbox -->
+                <div class="glass-form text-center">
+                    <div class="form-check d-flex justify-content-center align-items-center gap-2">
+                        <input class="form-check-input" type="checkbox" id="comments" name="comments" value="1" {% if
+                               comments %}checked{% endif %}>
+                        <label class="form-check-label" for="comments">Разрешить комментарии</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center mt-4">
+            <button type="submit" class="glow-button">🚀 Опубликовать</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/create_article.js') }}"></script>
+{% endblock %}

@@ -32,16 +32,34 @@
                 {{ form.username.label(class="form-label") }}
                 {{ form.username(class="form-control", placeholder="Введите имя пользователя") }}
                 {% for error in form.username.errors %}
-                <div class="text-danger small">{{ error }}</div>
+                    <div class="text-danger small">{{ error }}</div>
                 {% endfor %}
+                {% with msgs = get_flashed_messages(with_categories=true) %}
+                    {% if msgs %}
+                        {% for categ, msg in msgs %}
+                            {% if categ == 'error_username' %}
+                                <div class="form-error neon-error">{{ msg }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
             </div>
 
             <div class="mb-3">
                 {{ form.password.label(class="form-label") }}
                 {{ form.password(class="form-control", placeholder="Введите пароль") }}
                 {% for error in form.password.errors %}
-                <div class="text-danger small">{{ error }}</div>
+                    <div class="text-danger small">{{ error }}</div>
                 {% endfor %}
+                {% with msgs = get_flashed_messages(with_categories=true) %}
+                    {% if msgs %}
+                        {% for categ, msg in msgs %}
+                            {% if categ == 'error_password' %}
+                                <div class="form-error neon-error">{{ msg }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
             </div>
 
             <div class="form-check mb-3 custom-checkbox">
@@ -65,5 +83,7 @@
 <!-- Скрипт для частиц -->
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 </body>
 </html>

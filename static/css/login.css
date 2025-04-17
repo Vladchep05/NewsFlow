@@ -1,4 +1,4 @@
-/* Фоновая анимация частиц */
+/* Фоновая анимация частиц с живым градиентом */
 #particles-js {
     position: fixed;
     top: 0;
@@ -6,7 +6,31 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364, #1a1a2e);
+    background-size: 400% 400%;
+    animation: animatedGradient 12s ease infinite;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+/* Анимация градиента */
+@keyframes animatedGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* Основной контейнер поверх анимации */
@@ -76,13 +100,32 @@
     color: #000;
     box-shadow: 0 0 10px #00ffe0;
 }
+.text-info {
 
-/* Ссылки */
-a {
-    color: #00ffe0;
 }
 
-a:hover {
+/* Ссылки */
+.text-info {
+    color: #00ffe0 !important;
+}
+
+.text-info:hover {
     text-shadow: 0 0 10px #00ffe0;
 }
 
+.form-error.neon-error {
+    color: #ffffff;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-left: 3px solid #ff4d4d;
+    border-radius: 4px;
+    background-color: rgba(255, 0, 0, 0.05);
+    text-shadow:
+        0 0 3px rgba(255, 50, 50, 0.4),
+        0 0 6px rgba(255, 50, 50, 0.3);
+    box-shadow:
+        0 0 6px rgba(255, 50, 50, 0.2),
+        inset 0 0 4px rgba(255, 0, 0, 0.2);
+}
