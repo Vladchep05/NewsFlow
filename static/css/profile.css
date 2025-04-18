@@ -1,8 +1,7 @@
 /* Основной стиль для тела страницы */
 body {
-    background-color: #1f1f1f; /* Темный фон */
-    color: #b0b0b0; /* Светло-серый цвет текста для контраста */
-    font-family: 'Orbitron', sans-serif;
+    background-color: #1f1f1f;
+    color: #b0b0b0;
 }
 
 /* Стили для контейнера профиля */
@@ -35,30 +34,6 @@ body {
 /* Стили для меток (сильных элементов) */
 .card p strong {
     color: #aaa; /* Меланхоличный светло-серый цвет для меток */
-}
-
-/* Стили для кнопки редактирования */
-.btn {
-    background-color: #555; /* Темная кнопка */
-    border: 1px solid #666; /* Граница с темным оттенком */
-    color: #ddd; /* Светлый текст на кнопке */
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 10px 20px;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-}
-
-/* Наведение на кнопку */
-.btn:hover {
-    background-color: #444; /* Более темный оттенок на hover */
-    color: #fff; /* Белый текст при наведении */
-}
-
-/* Меланхоличное сообщение */
-.text-muted {
-    color: #7a7a7a; /* Тусклый текст для сообщения */
 }
 
 /* Общие стили для блоков с текстом */
@@ -99,4 +74,124 @@ body {
 
 .card {
     animation: fadeIn 1.5s ease-out;
+}
+
+body {
+    background: radial-gradient(ellipse at center, #1e1e1e 0%, #000000 100%);
+    color: #fff;
+}
+
+/* Неоновая карточка */
+.neon-card {
+    border: 2px solid transparent;
+    background-color: rgba(20, 20, 20, 0.9);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7), 0 0 50px rgba(255, 0, 255, 0.7);
+    border-radius: 15px;
+    padding: 25px;
+    position: relative;
+    z-index: 1;
+    animation: neon-pulse 1.5s infinite alternate;
+}
+
+/* Анимация пульсации */
+@keyframes neon-pulse {
+    0% {
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 25px rgba(255, 0, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 25px rgba(0, 255, 255, 1), 0 0 50px rgba(255, 0, 255, 1);
+    }
+}
+
+.neon-text {
+    text-shadow: 0 0 5px #0ff, 0 0 15px #0ff, 0 0 25px #ff00ff, 0 0 35px #ff00ff;
+    font-size: 1.4em;
+    transition: text-shadow 0.3s ease-in-out;
+}
+
+/* При наведении на текст */
+.neon-text:hover {
+    text-shadow: 0 0 10px #0ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+}
+
+/* Кнопка с анимацией */
+.neon-btn {
+    color: #fff;
+    border: 2px solid #0ff;
+    background-color: transparent;
+    transition: 0.3s ease, transform 0.2s ease;
+    border-radius: 50px;
+    padding: 20px 40px;
+    font-weight: bold;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px #0ff;
+    text-decoration: none;
+}
+
+.neon-btn:hover {
+    background-color: #0ff;
+    color: #000;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff;
+    text-decoration: none;
+}
+
+/* Аватар */
+.avatar {
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.8);
+    transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+    transform: rotate(360deg);
+}
+
+/* Информация о себе */
+.about-me {
+    font-size: 1.2em;
+    color: #ddd;
+    margin-top: 30px;
+    border-top: 2px solid #ff00ff;
+    padding-top: 15px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.about-me h5 {
+    text-shadow: 0 0 10px #ff00ff, 0 0 15px #ff00ff;
+}
+
+/* Контейнер */
+.container {
+    margin-bottom: 50px;
+}
+
+/* Неоновый текст для информации (почта, страна и т.д.) */
+.neon-info {
+    font-size: 1.3em;
+    color: #fff;
+    text-shadow: 0 0 5px #0ff, 0 0 15px #ff00ff;
+    margin-bottom: 10px;
+    transition: text-shadow 0.3s ease;
+}
+
+.neon-info:hover {
+    text-shadow: 0 0 10px #0ff, 0 0 25px #ff00ff, 0 0 35px #ff00ff;
+}
+
+.neon-info-country {
+    text-shadow: 0 0 5px #ff0000, 0 0 15px #ff0000, 0 0 25px #ff9900;
+}
+
+.neon-info-email {
+    text-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00, 0 0 25px #ffff00;
+}
+
+.neon-info-articles {
+    text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 25px #ff3333;
+}
+
+.neon-info-date {
+    text-shadow: 0 0 5px #ff6699, 0 0 15px #ff6699, 0 0 25px #ffcc00;
 }

@@ -2,30 +2,42 @@
 
 {% block title %}Профиль пользователя{% endblock %}
 
-{% block links  %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-6">
-            <div class="card shadow-sm" style="border: 1px solid #3a3a3a; background-color: #2c2c2c; color: #fff;">
-                <div class="card-body text-center">
-                    <h2 class="card-title mb-4" style="font-family: 'Orbitron', sans-serif;">Печальный профиль</h2>
-                    <img src="{{ avatar_url }}" alt="Аватар" class="rounded-circle" width="150" height="150">
-                    <h4 class="mt-3">{{ username }}</h4>
-                    <p class="text-muted">На этой земле все временно...</p>
+            <div class="neon-card text-center">
+                <h2 class="mb-4 neon-text" style="font-size: 40px;">⚡ Профиль ⚡</h2>
+                <img src="{{ avatar_url }}" alt="Аватар" class="rounded-circle avatar" width="180" height="180">
+                <h4 class="mt-3 neon-text" style="font-size: 28px;">{{ username }}</h4>
 
-                    <div class="mt-4">
-                        <p><strong>Электронная почта:</strong> {{ email }}</p>
-                        <p><strong>Дата регистрации:</strong> {{ registration_date }}</p>
-                        <p><strong>Количество статей:</strong> {{ articles_count }}</p>
-                        <p><strong>Страна:</strong> {{ country }}</p>
-                    </div>
-
-                    <a href="/edit-profile" class="btn btn-outline-light mt-4">✏️ Редактировать профиль</a>
+                <div class="mt-4 text-start">
+                    <p class="neon-info neon-info-email"><strong>📧 Электронная почта:</strong> {{ email }}</p>
+                    <p class="neon-info neon-info-date"><strong>📅 Дата регистрации:</strong> {{ registration_date }}</p>
+                    <p class="neon-info neon-info-articles"><strong>📝 Количество статей:</strong> {{ articles_count }}
+                    </p>
+                    <p class="neon-info neon-info-country"><strong>🌍 Страна:</strong> {{ country }}</p>
                 </div>
+
+                <!-- Блок "О себе" -->
+                {% if about_me %}
+                <div class="about-me">
+                    <h5 class="neon-text">📝 О себе</h5>
+                    <p style="font-size: 20px;">{{ about_me }}</p>
+                </div>
+                {% else %}
+                <div class="about-me">
+                    <h5 class="neon-text">📝 О себе</h5>
+                    <p style="font-size: 20px;">Этот пользователь пока не добавил описание о себе.</p>
+                </div>
+                {% endif %}
+
+                <a href="/edit-profile" class="neon-btn mt-4 d-inline-block">✏️ Редактировать</a>
             </div>
         </div>
     </div>

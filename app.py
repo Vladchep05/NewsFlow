@@ -7,6 +7,7 @@ from smtplib import SMTP
 import asyncio
 import hashlib
 import base64
+import json
 import os
 
 from flask import Flask, render_template, redirect, url_for, flash, request, jsonify, session
@@ -67,18 +68,16 @@ def base_win():
             avatar_url = f"data:image/png;base64,{avatar_data}"
 
         return render_template(
-            'news_feed.html',
+            'base.html',
             user_authenticated=True,
             username=user.username,
             avatar_url=avatar_url,
-            style=False,
-            articles=articles
+            style=False
         )
     else:
         return render_template(
-            'news_feed.html',
-            user_authenticated=False,
-            articles=articles
+            'base.html',
+            user_authenticated=False
         )
 
 
@@ -292,9 +291,9 @@ def error_authorization(authorization):
 
 @app.route("/settings", methods=["GET", "POST"])
 def settings():
-    id = session.get('id', None)
-    if id:
-        user = db_sess.query(User).filter(User.id == id).first()
+    user_id = session.get('id', None)
+    if user_id:
+        user = db_sess.query(User).filter(User.id == user_id).first()
         avatar_data = base64.b64encode(user.avatar).decode('utf-8')
         avatar_url = f"data:image/png;base64,{avatar_data}"
         return render_template(
@@ -382,15 +381,31 @@ def create_article():
 
 @app.route("/profile")
 def profile():
-    id = session.get('id', None)
-    if id:
-        user = db_sess.query(User).filter(User.id == id).first()
+    user_id = session.get('id', None)
+    if user_id:
+        user = db_sess.query(User).filter(User.id == user_id).first()
         avatar_data = base64.b64encode(user.avatar).decode('utf-8')
         avatar_url = f"data:image/png;base64,{avatar_data}"
+        json_path = os.path.join('static', 'data', 'countries.json')
+        with open(json_path, encoding='utf-8') as f:
+            data = json.load(f)
+        countr = None
+        for country in data:
+            if country['code'] == user.country:
+                countr = country['name']
+                break
+
+        dt = datetime.fromisoformat(str(user.created_date)).strftime("%d.%m.%Y %H:%M")
+
         return render_template(
             "profile.html",
             user_authenticated=True,
             username=user.username,
+            registration_date=dt,
+            articles_count=0,
+            email=user.email,
+            country=countr,
+            about_me=user.about_myself,
             avatar_url=avatar_url
         )
     else:
