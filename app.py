@@ -35,21 +35,50 @@ db_sess = None
 def base_win():
     global db_sess, session
     user_id = session.get('id', None)
+    articles = db_sess.query(Article).order_by(Article.created_date.desc()).all()
+
+    # Дополнительная обработка для каждой статьи
+    for article in articles:
+        author = article.user
+        if author and author.avatar:
+            avatar_data = base64.b64encode(author.avatar).decode('utf-8')
+            article.author = {
+                'username': author.username,
+                'avatar_url': f"data:image/png;base64,{avatar_data}"
+            }
+        else:
+            article.author = {
+                'username': 'Аноним',
+                'avatar_url': url_for('static', filename='img/avatar/default.jpg')
+            }
+
+        # Первая картинка статьи, если есть
+        if article.images:
+            img_data = base64.b64encode(article.images[0].image_data).decode('utf-8')
+            article.image_url = f"data:image/png;base64,{img_data}"
+        else:
+            article.image_url = None
+
     if user_id:
         user = db_sess.query(User).filter(User.id == user_id).first()
-        avatar_data = base64.b64encode(user.avatar).decode('utf-8')
-        avatar_url = f"data:image/png;base64,{avatar_data}"
+        avatar_url = None
+        if user.avatar:
+            avatar_data = base64.b64encode(user.avatar).decode('utf-8')
+            avatar_url = f"data:image/png;base64,{avatar_data}"
+
         return render_template(
-            'base.html',
+            'news_feed.html',
             user_authenticated=True,
             username=user.username,
             avatar_url=avatar_url,
-            style=False
+            style=False,
+            articles=articles
         )
     else:
         return render_template(
-            'base.html',
-            user_authenticated=False
+            'news_feed.html',
+            user_authenticated=False,
+            articles=articles
         )
 
 

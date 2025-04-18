@@ -192,7 +192,7 @@ body.loaded {
     top: 60px;
     right: 0;
     width: 250px;
-    height: 250px;
+    height: 300px;
     background-color: #121212;
     color: #00fff7;
     border: 2px solid #00fff7;
@@ -234,4 +234,26 @@ body.loaded {
     font-size: 1.2rem;
     color: #fff;
     font-weight: bold;
+}
+
+.btn-neon {
+    background-color: transparent;
+    color: #00fff7;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 2px solid #00fff7;
+    border-radius: 8px;
+    padding: 10px 20px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    text-shadow: 0 0 5px #00fff7;
+    box-shadow: 0 0 10px #00fff7, inset 0 0 5px #00fff7;
+}
+
+.btn-neon:hover {
+    background-color: #00fff7;
+    color: #000;
+    text-shadow: none;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #00fff7, 0 0 40px #00fff7;
 }
