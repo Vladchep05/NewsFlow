@@ -1,14 +1,16 @@
+/* Определение глобальных CSS-переменных для темы */
 :root {
-    --bg-color: #0d0d0d;
-    --neon-pink: #ff007f;
-    --neon-blue: #00ffff;
-    --text-color: #e0e0e0;
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --border-glow: 0 0 8px var(--neon-pink), 0 0 16px var(--neon-blue);
-    --hover-glow: 0 0 12px var(--neon-blue), 0 0 20px var(--neon-pink);
-    --shadow-glow: 0 0 60px rgba(0, 255, 255, 0.3);
+    --bg-color: #0d0d0d; /* Цвет фона страницы */
+    --neon-pink: #ff007f; /* Основной неоновый розовый */
+    --neon-blue: #00ffff; /* Основной неоновый голубой */
+    --text-color: #e0e0e0; /* Цвет текста */
+    --glass-bg: rgba(255, 255, 255, 0.05); /* Прозрачный стеклянный фон */
+    --border-glow: 0 0 8px var(--neon-pink), 0 0 16px var(--neon-blue); /* Эффект свечения границ */
+    --hover-glow: 0 0 12px var(--neon-blue), 0 0 20px var(--neon-pink); /* Эффект свечения при наведении */
+    --shadow-glow: 0 0 60px rgba(0, 255, 255, 0.3); /* Общая тень-свечение */
 }
 
+/* Стили для тела страницы */
 body {
     background-color: var(--bg-color);
     background-image: radial-gradient(circle at center, #111 0%, #000 100%);
@@ -19,6 +21,7 @@ body {
     overflow-x: hidden;
 }
 
+/* Заголовок формы */
 .form-title {
     font-size: 3rem;
     color: var(--neon-blue);
@@ -27,6 +30,7 @@ body {
     text-shadow: var(--border-glow);
 }
 
+/* Контейнер с эффектом стекла */
 .glass-form {
     background: var(--glass-bg);
     border: 1px solid var(--neon-pink);
@@ -37,11 +41,13 @@ body {
     transition: 0.3s ease-in-out;
 }
 
+/* Метки для полей формы */
 .form-label {
     font-weight: bold;
     color: var(--neon-blue);
 }
 
+/* Общий стиль для полей ввода и выбора шрифта */
 .form-control,
 .custom-textarea,
 .font-picker {
@@ -54,6 +60,7 @@ body {
     transition: 0.2s ease;
 }
 
+/* Стили при фокусе на полях */
 .form-control:focus,
 .custom-textarea:focus {
     background-color: transparent;
@@ -63,10 +70,12 @@ body {
     box-shadow: var(--hover-glow);
 }
 
+/* Размер текстового поля */
 .custom-textarea {
     width: 730px;
 }
 
+/* Кнопка выбора файлов */
 input[type="file"]::file-selector-button {
     background: var(--neon-blue);
     color: black;
@@ -79,17 +88,20 @@ input[type="file"]::file-selector-button {
     box-shadow: var(--border-glow);
 }
 
+/* Эффект при наведении на кнопку загрузки */
 input[type="file"]::file-selector-button:hover {
     background: var(--neon-pink);
     color: white;
     box-shadow: var(--hover-glow);
 }
 
+/* Варианты в выпадающем списке */
 .font-picker option {
     background-color: #000;
     color: #fff;
 }
 
+/* Кнопка отправки статьи */
 .glow-button {
     background: none;
     color: var(--neon-blue);
@@ -102,6 +114,7 @@ input[type="file"]::file-selector-button:hover {
     transition: 0.3s ease;
 }
 
+/* Эффект при наведении на кнопку */
 .glow-button:hover {
     transform: scale(1.05);
     box-shadow: var(--hover-glow);
@@ -109,6 +122,7 @@ input[type="file"]::file-selector-button:hover {
     border-color: var(--neon-pink);
 }
 
+/* Чекбокс */
 .form-check-input {
     appearance: none;
     width: 20px;
@@ -122,12 +136,14 @@ input[type="file"]::file-selector-button:hover {
     margin-top: 0.2rem;
 }
 
+/* Стили для выбранного чекбокса */
 .form-check-input:checked {
     background-color: var(--neon-pink);
     border-color: var(--neon-pink);
     box-shadow: var(--hover-glow);
 }
 
+/* Галочка в чекбоксе */
 .form-check-input:checked::after {
     content: '✓';
     color: white;
@@ -137,11 +153,13 @@ input[type="file"]::file-selector-button:hover {
     left: 4px;
 }
 
+/* Метка чекбокса */
 .form-check-label {
     margin-left: 0.5rem;
     color: var(--text-color);
 }
 
+/* Превью загруженных изображений */
 .image-preview {
     display: flex;
     flex-wrap: wrap;
@@ -149,6 +167,7 @@ input[type="file"]::file-selector-button:hover {
     margin-top: 10px;
 }
 
+/* Стили миниатюр изображений */
 .image-preview img {
     width: 100px;
     height: 100px;
@@ -159,6 +178,7 @@ input[type="file"]::file-selector-button:hover {
     position: relative;
 }
 
+/* Кнопка удаления изображения */
 .remove-image {
     position: absolute;
     top: -6px;
@@ -176,10 +196,12 @@ input[type="file"]::file-selector-button:hover {
     box-shadow: 0 0 6px var(--neon-blue);
 }
 
+/* Цвет плейсхолдера в заголовке */
 #title::placeholder {
     color: gray;
 }
 
+/* Переключатель темы */
 .theme-toggle {
     position: fixed;
     top: 20px;
@@ -195,37 +217,44 @@ input[type="file"]::file-selector-button:hover {
     transition: 0.3s ease;
 }
 
+/* Наведение на переключатель темы */
 .theme-toggle:hover {
     box-shadow: var(--hover-glow);
     color: var(--neon-pink);
     border-color: var(--neon-pink);
 }
 
+/* Плавное обновление шрифта */
 .font-preview {
     transition: font-family 0.3s ease;
 }
 
+/* Ошибка валидации формы */
 .is-invalid {
     border-color: #ff4f9a !important;
     box-shadow: 0 0 10px #ff4f9a !important;
 }
 
+/* Текст ошибки валидации */
 .invalid-feedback {
     color: #ff4f9a;
     font-size: 0.8rem;
     margin-top: 4px;
 }
 
+/* Контейнер изображения */
 .image-container {
     position: relative;
     display: inline-block;
 }
 
+/* Наведение для отображения подписи */
 .image-container:hover .image-caption {
     opacity: 1;
     transform: translateY(0);
 }
 
+/* Подпись изображения */
 .image-caption {
     position: absolute;
     bottom: 0;
@@ -244,6 +273,7 @@ input[type="file"]::file-selector-button:hover {
     z-index: 1;
 }
 
+/* Альтернативная кнопка загрузки */
 .custom-upload-btn {
     background: var(--neon-blue);
     color: black;
@@ -256,6 +286,7 @@ input[type="file"]::file-selector-button:hover {
     box-shadow: var(--border-glow);
 }
 
+/* Наведение на кастомную кнопку загрузки */
 .custom-upload-btn:hover {
     background: var(--neon-pink);
     color: white;
