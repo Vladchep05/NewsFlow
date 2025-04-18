@@ -14,7 +14,6 @@
 body {
     background-color: var(--bg-color);
     background-image: radial-gradient(circle at center, #111 0%, #000 100%);
-    font-family: 'Orbitron', sans-serif;
     color: var(--text-color);
     margin: 0;
     padding: 0;

@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
+    color: #ffffff;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+.verification-container {
+    padding: 30px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.verification-card {
+    border-radius: 15px;
+    max-width: 450px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.neon-btn {
+    padding: 12px 20px;
+    font-weight: bold;
+    border: none;
+    text-shadow: 0 0 3px #ffffff;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.neon-btn:hover {
+    box-shadow: 0 0 25px, 0 0 45px inset;
+}
+
+.timer-box {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 10px 15px;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    box-shadow: 0 0 10px #fff3, 0 0 15px #fff2 inset;
+    backdrop-filter: blur(5px);
+    animation: timerPulse 2s ease-in-out infinite;
+}
+
+@keyframes timerPulse {
+    0% { box-shadow: 0 0 5px #fff2, 0 0 10px #fff1 inset; }
+    50% { box-shadow: 0 0 15px #fff5, 0 0 25px #fff3 inset; }
+    100% { box-shadow: 0 0 5px #fff2, 0 0 10px #fff1 inset; }
+}

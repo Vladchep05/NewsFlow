@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
+    color: #ffffff;
+}
+
+.verification-container {
+    padding: 30px;
+}
+
+.verification-card {
+    border-radius: 15px;
+    max-width: 450px;
+    width: 100%;
+}
+
+.neon-text {
+    font-size: 28px;
+    text-shadow: 0 0 10px, 0 0 20px;
+}
+
+.neon-btn {
+    border: none;
+    font-weight: bold;
+    text-shadow: 0 0 3px #ffffff;
+    transition: all 0.3s ease;
+}
+
+.neon-btn:hover {
+    transform: scale(1.05);
+}
+
+.form-control {
+    background-color: #111;
+    text-align: center;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.form-control::placeholder {
+    color: #cccccc;
+    opacity: 0.8;
+}
+
+.form-control:focus {
+    outline: none;
+    background-color: #000;
+    color: #ffffff;
+}
+
+.text-danger {
+    color: #ff4d4d !important;
+    font-weight: bold;
+    text-shadow: 0 0 5px #ff4d4d;
+}
+
+.code-input {
+    letter-spacing: 0.5em;
+    font-size: 28px;
+    height: 60px;
+    padding-left: 1em;
+    text-align: center;
+}
+
+.timer-box {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 10px 15px;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    box-shadow: 0 0 10px #fff3, 0 0 15px #fff2 inset;
+    backdrop-filter: blur(5px);
+    animation: timerPulse 2s ease-in-out infinite;
+}
+
+@keyframes timerPulse {
+    0% { box-shadow: 0 0 5px #fff2, 0 0 10px #fff1 inset; }
+    50% { box-shadow: 0 0 15px #fff5, 0 0 25px #fff3 inset; }
+    100% { box-shadow: 0 0 5px #fff2, 0 0 10px #fff1 inset; }
+}

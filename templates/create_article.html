@@ -73,13 +73,20 @@
                             class="font-picker p-2"
                             name="font">
                         <option value="">-- Выберите шрифт --</option>
-                        <option value="Arial" {% if font=='Arial' %}selected{% endif %}>Arial</option>
-                        <option value="Courier New" {% if font=='Courier New
+                        <option value="Arial" style="font-family: Arial;" {% if font=='Arial' %}selected{% endif %}>
+                            Arial
+                        </option>
+                        <option value="Courier New" style="font-family: 'Courier New';" {% if font=='Courier New
                         ' %}selected{% endif %}>Courier New</option>
-                        <option value="Verdana" {% if font=='Verdana' %}selected{% endif %}>Verdana</option>
-                        <option value="Times New Roman" {% if font=='Times New Roman
+                        <option value="Verdana" style="font-family: Verdana;" {% if font=='Verdana' %}selected{% endif
+                                %}>Verdana
+                        </option>
+                        <option value="Times New Roman" style="font-family: 'Times New Roman';" {% if font=='Times New
+                                Roman
                         ' %}selected{% endif %}>Times New Roman</option>
-                        <option value="Poppins" {% if font=='Poppins' %}selected{% endif %}>Poppins</option>
+                        <option value="Poppins" style="font-family: 'Poppins';" {% if font=='Poppins' %}selected{% endif
+                                %}>Poppins
+                        </option>
                     </select>
                     <div id="font-error" class="text-danger mt-1"></div>
                 </div>

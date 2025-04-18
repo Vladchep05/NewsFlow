@@ -1,70 +1,76 @@
 body {
-  margin: 0;
-  padding: 0;
-  background: radial-gradient(ellipse at center, #0d0d0d 0%, #000000 100%);
-  font-family: 'Orbitron', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(ellipse at center, #0d0d0d 0%, #000000 100%);
+    font-family: 'Orbitron', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.loaded {
+    opacity: 1;
 }
 
 .error-box {
-  position: relative;
-  padding: 30px 40px;
-  border: 2px solid #ff0059;
-  border-radius: 20px;
-  background: rgba(255, 0, 89, 0.05);
-  color: #ff0059;
-  font-size: 1.2rem;
-  box-shadow:
-    0 0 10px #ff0059,
-    0 0 20px #ff0059,
-    inset 0 0 10px #ff0059;
-  text-align: center;
-  animation: neon-flicker 1.2s ease-in-out;
+    position: relative;
+    padding: 30px 40px;
+    border: 2px solid #ff0059;
+    border-radius: 20px;
+    background: rgba(255, 0, 89, 0.05);
+    color: #ff0059;
+    font-size: 1.2rem;
+    box-shadow:
+      0 0 10px #ff0059,
+      0 0 20px #ff0059,
+      inset 0 0 10px #ff0059;
+    text-align: center;
+    animation: neon-flicker 1.2s ease-in-out;
 }
 
 .error-box::before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  bottom: -10px;
-  left: -10px;
-  background: linear-gradient(45deg, #ff0059, #00fff7, #ff0059);
-  filter: blur(20px);
-  opacity: 0.3;
-  z-index: -1;
-  border-radius: 25px;
-  animation: pulse-border 3s infinite linear;
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+    background: linear-gradient(45deg, #ff0059, #00fff7, #ff0059);
+    filter: blur(20px);
+    opacity: 0.3;
+    z-index: -1;
+    border-radius: 25px;
+    animation: pulse-border 3s infinite linear;
 }
 
 @keyframes neon-flicker {
-  0% { opacity: 0; transform: scale(0.95); }
-  50% { opacity: 1; transform: scale(1.05); }
-  100% { opacity: 1; transform: scale(1); }
+    0% { opacity: 0; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 @keyframes pulse-border {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
 }
 
 .error-title {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  color: #fff;
-  text-shadow: 0 0 5px #ff0059, 0 0 10px #ff0059;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 0 0 5px #ff0059, 0 0 10px #ff0059;
 }
 
 .error-message {
-  color: #fff;
-  opacity: 0.9;
-  text-shadow: 0 0 5px #ff0059;
+    color: #fff;
+    opacity: 0.9;
+    text-shadow: 0 0 5px #ff0059;
 }

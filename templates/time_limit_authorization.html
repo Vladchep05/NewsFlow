@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ожидание подтверждения</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/time_limit_base.css') }}">
+
+    <!-- Уникальные стили под тип -->
+    {% if authorization == "register" %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/time_limit_register.css') }}">
+    {% elif authorization == "login" %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/time_limit_login.css') }}">
+    {% endif %}
+</head>
+<body>
+<div class="verification-container">
+    <div class="verification-card">
+        <h1 class="neon-text">
+            Время ожидания подтверждения
+            {% if authorization == "register" %}
+            регистрации
+            {% elif authorization == "login" %}
+            входа
+            {% endif %}
+            истекло
+        </h1>
+        <button class="neon-btn" onclick="window.location.href = '/home';">Перенаправление...</button>
+        <div class="timer-box">
+            <span id="countdown">5</span> секунд
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/time_limit_authorization.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+</body>
+</html>
