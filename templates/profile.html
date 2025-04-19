@@ -14,10 +14,23 @@
             <div class="neon-card text-center">
                 <h2 class="mb-4 neon-text" style="font-size: 40px;">⚡ Профиль ⚡</h2>
                 <img src="{{ avatar_url }}" alt="Аватар" class="rounded-circle avatar" width="180" height="180">
+                <!-- Модальное окно -->
+                <div id="avatarModal" class="modal">
+                    <div class="modal-overlay"></div>
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="modalAvatar" src="" alt="Аватар">
+                </div>
+
                 <h4 class="mt-3 neon-text" style="font-size: 28px;">{{ username }}</h4>
 
                 <div class="mt-4 text-start">
-                    <p class="neon-info neon-info-email"><strong>📧 Электронная почта:</strong> {{ email }}</p>
+                    <p class="neon-info neon-info-email"><strong>📧 Электронная почта:</strong>
+                        {% if my_profile %}
+                        {{ email }}
+                        {% else %}
+                        {{ email[:3] + '***@' + email.split('@')[-1].split('.')[-2] + '.' + email.split('.')[-1] }}
+                        {% endif %}
+                    </p>
                     <p class="neon-info neon-info-date"><strong>📅 Дата регистрации:</strong> {{ registration_date }}</p>
                     <p class="neon-info neon-info-articles"><strong>📝 Количество статей:</strong> {{ articles_count }}
                     </p>
@@ -27,19 +40,41 @@
                 <!-- Блок "О себе" -->
                 {% if about_me %}
                 <div class="about-me">
-                    <h5 class="neon-text">📝 О себе</h5>
+                    <h5 class="neon-txt">📝 О себе:</h5>
                     <p style="font-size: 20px;">{{ about_me }}</p>
                 </div>
                 {% else %}
                 <div class="about-me">
-                    <h5 class="neon-text">📝 О себе</h5>
+                    <h5 class="neon-txt">📝 О себе:</h5>
                     <p style="font-size: 20px;">Этот пользователь пока не добавил описание о себе.</p>
                 </div>
                 {% endif %}
 
-                <a href="/edit-profile" class="neon-btn mt-4 d-inline-block">✏️ Редактировать</a>
+                {% if my_profile %}
+                <a href="{{ url_for('my_articles') }}" class="neon-btn mt-4 d-inline-block">✏️ Редактировать</a>
+                {% endif %}
+
+                <div class="mt-4 d-flex justify-content-around flex-wrap">
+                    <a href="javascript:history.back()" class="neon-btn mb-2">← Назад</a>
+                    <a href="{{ url_for('my_articles') }}" class="neon-btn mb-2">📚 Смотреть статьи</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    const modal = document.getElementById("avatarModal");
+    const overlay = modal.querySelector(".modal-overlay");
+    const avatar = document.querySelector(".avatar");
+    const modalImg = document.getElementById("modalAvatar");
+    const closeBtn = modal.querySelector(".close");
+
+    avatar.onclick = () => {
+      modal.style.display = "block";
+      modalImg.src = avatar.src;
+    };
+
+    closeBtn.onclick = () => modal.style.display = "none";
+    overlay.onclick = () => modal.style.display = "none";
+</script>
 {% endblock %}

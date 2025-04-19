@@ -41,7 +41,10 @@
             {% elif authorization == "login" %}
             Мы отправили код подтверждения входа на {{ email }}.
             {% endif %}
-            <br>Он действителен в течение <strong>5 минут</strong>. После этого вы будете автоматически перенаправлены.
+            <br>
+            Он действителен в течение <strong>5 минут</strong>. После этого вы будете автоматически перенаправлены.
+            <br>
+            Если письмо не дошло проверьте папку "спам".
         </p>
 
         <div id="timer" class="timer-box">Осталось: 5:00</div>
@@ -50,7 +53,7 @@
             {{ form.hidden_tag() }}
 
             <div class="mb-3 mt-3">
-                {{ form.code.label(class="form-label text-light") }}
+                {{ form.code.label(class="form-label text-light") }}:
                 {{ form.code(class="form-control code-input", placeholder="Введите код") }}
                 {% for error in form.code.errors %}
                 <div class="text-danger small mt-1">{{ error }}</div>

@@ -55,23 +55,23 @@
                         <!-- Панель с кнопками -->
                         <div class="avatar-panel">
                             <ul class="list-unstyled">
-                                <li><a href="/profile" class="btn btn-light w-100 mb-2">👤 Профиль</a></li>
-                                <li><a href="/settings" class="btn btn-light w-100 mb-2">⚙️ Настройки</a></li>
-                                <li><a href="/my-articles" class="btn btn-light w-100 mb-2">📝 Мои статьи</a></li>
-                                <li><a href="/create_article" class="btn btn-success w-100 mb-2">➕ Создать статью</a>
+                                <li><a href="/profile/{{ user_id }}" class="btn btn-light w-100 mb-2">👤 Профиль</a></li>
+                                <li><a href="{{ url_for('settings') }}" class="btn btn-light w-100 mb-2">⚙️ Настройки</a></li>
+                                <li><a href="{{ url_for('my_articles') }}" class="btn btn-light w-100 mb-2">📝 Мои статьи</a></li>
+                                <li><a href="{{ url_for('create_article') }}" class="btn btn-success w-100 mb-2">➕ Создать статью</a>
                                 </li>
                                 <hr>
-                                <li><a href="/exit" class="btn btn-danger w-100"><i class="fas fa-sign-out-alt"></i>
+                                <li><a href="{{ url_for('exit') }}" class="btn btn-danger w-100"><i class="fas fa-sign-out-alt"></i>
                                     Выйти</a></li>
                             </ul>
                         </div>
                         {% else %}
                         <div class="d-flex gap-2">
-                            <a href="/login"
+                            <a href="{{ url_for('login') }}"
                                class="btn btn-light text-dark fw-semibold border-0 shadow-sm px-3 py-1 rounded-pill login-btn small-btn">
                                 🔐 Войти
                             </a>
-                            <a href="/register"
+                            <a href="{{ url_for('register') }}"
                                class="btn btn-outline-warning fw-semibold px-3 py-1 rounded-pill register-btn small-btn">
                                 ✨ Зарегистрироваться
                             </a>
@@ -154,6 +154,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+
 {% block scripts %}{% endblock %}
 </body>
 </html>

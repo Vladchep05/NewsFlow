@@ -1,15 +1,16 @@
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 from email.mime.text import MIMEText
-from dotenv import load_dotenv
 from random import randint
 from smtplib import SMTP
-import asyncio
+import threading
 import hashlib
 import base64
 import json
 import os
 
+from cryptography.fernet import Fernet
+from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, flash, request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -67,12 +68,19 @@ def base_win():
             avatar_data = base64.b64encode(user.avatar).decode('utf-8')
             avatar_url = f"data:image/png;base64,{avatar_data}"
 
+        load_dotenv()
+        key = os.getenv("KEY")
+        cipher = Fernet(key)
+
+        user_id = cipher.encrypt(str(user_id).encode()).decode()
+
         return render_template(
             'base.html',
             user_authenticated=True,
             username=user.username,
             avatar_url=avatar_url,
-            style=False
+            style=False,
+            user_id=user_id
         )
     else:
         return render_template(
@@ -107,17 +115,18 @@ def register():
             # Хешируем пароль
             hashed_password = generate_password_hash(password)
 
-            global app
-            session.permanent = True
-            app.permanent_session_lifetime = timedelta(minutes=5)
-
             session['username'] = username
             session['email'] = email
             session['hashed_password'] = hashed_password
             session['country'] = country
             session['remaining_time'] = 300
 
-            sending_code('register')
+            # Генерация 6-значного кода
+            code = str(randint(100000, 999999))
+            session['code'] = hashlib.sha256(code.encode()).hexdigest()
+
+            thread = threading.Thread(target=sending_code, args=('register', email, code))
+            thread.start()
 
             return redirect(url_for('confirmation', typ='register'))
 
@@ -139,16 +148,17 @@ def login():
             if user and check_password_hash(user.hashed_password, password):
                 remember = form.remember.data
 
-                global app
-                session.permanent = True
-                app.permanent_session_lifetime = timedelta(minutes=5)
-
                 session['username'] = username
                 session['email'] = user.email
                 session['remember'] = remember
                 session['remaining_time'] = 300
 
-                sending_code('login')
+                # Генерация 6-значного кода
+                code = str(randint(100000, 999999))
+                session['code'] = hashlib.sha256(code.encode()).hexdigest()
+
+                thread = threading.Thread(target=sending_code, args=('login', user.email, code))
+                thread.start()
 
                 return redirect(url_for('confirmation', typ='login'))
             else:
@@ -161,17 +171,11 @@ def login():
         return redirect(url_for('error'))
 
 
-def sending_code(typ):
-    # Отправляем новый код, если страница была загружена без POST запроса
-    email = session.get('email', None)
+def sending_code(typ, email, code):
     load_dotenv()
 
     email_sender = os.getenv("EMAIL_SENDER")
     email_password = os.getenv("EMAIL_PASSWORD")
-
-    # Генерация 6-значного кода
-    code = str(randint(100000, 999999))
-    session['code'] = hashlib.sha256(code.encode()).hexdigest()
 
     with open("templates/confirmation_mail.html", "r", encoding="utf-8") as file:
         html_template = file.read()
@@ -203,6 +207,7 @@ def sending_code(typ):
 
 @app.route("/confirmation/<typ>", methods=["GET", "POST"])
 def confirmation(typ):
+    global session
     user_id = session.get('id', None)
 
     # Проверяем, если user_id в сессии, иначе показываем ошибку
@@ -229,24 +234,30 @@ def confirmation(typ):
                         country = session.pop('country', None)
 
                         # Создаём нового пользователя
-                        new_user = User(username=username, email=email, hashed_password=hashed_password,
-                                        country=country)
+                        new_user = User(
+                            username=username,
+                            email=email,
+                            hashed_password=hashed_password,
+                            country=country
+                        )
                         db_sess.add(new_user)
                         db_sess.commit()
 
+                        session.clear()
+                        session.permanent = False
                         session['id'] = new_user.id
 
                     else:
                         remember = session.pop('remember')
+                        username = session.pop('username')
+
+                        session.clear()
                         session.permanent = remember
                         if remember:
                             app.permanent_session_lifetime = timedelta(days=365)
 
-                        username = session.pop('username')
                         user = db_sess.query(User).filter(User.username == username).first()
                         session['id'] = user.id
-
-                    _ = session.pop('remaining_time')
 
                     return redirect(url_for("base_win"))
                 else:
@@ -260,8 +271,14 @@ def confirmation(typ):
 
         email = session.get('email', None)
         # Отображаем страницу подтверждения с оставшимся временем
-        return render_template("mail_confirmation.html", form=form, authorization=typ, email=email,
-                               remaining_time=remaining_time)
+        return render_template(
+            "mail_confirmation.html",
+            form=form,
+            authorization=typ,
+            email=email,
+            remaining_time=remaining_time
+        )
+
     else:
         return redirect(url_for('error'))
 
@@ -284,22 +301,56 @@ def update_time():
 @app.route("/time_limit/<authorization>", methods=["GET", "POST"])
 def error_authorization(authorization):
     if request.method == "GET":
+        session.clear()
+        session.permanent = False
         return render_template("time_limit_authorization.html", authorization=authorization)
     else:
         return redirect(url_for('error'))
 
 
-@app.route("/settings", methods=["GET", "POST"])
-def settings():
+@app.route("/profile/<id>")
+def profile(id):
     user_id = session.get('id', None)
     if user_id:
-        user = db_sess.query(User).filter(User.id == user_id).first()
+        load_dotenv()
+        key = os.getenv("KEY")
+        cipher = Fernet(key)
+
+        id = int(cipher.decrypt(id.encode()).decode())
+
+        user = db_sess.query(User).filter(User.id == id).first()
+
         avatar_data = base64.b64encode(user.avatar).decode('utf-8')
         avatar_url = f"data:image/png;base64,{avatar_data}"
+
+        json_path = os.path.join('static', 'data', 'countries.json')
+
+        with open(json_path, encoding='utf-8') as f:
+            data = json.load(f)
+        countr = None
+        for country in data:
+            if country['code'] == user.country:
+                countr = country['name']
+                break
+
+        dt = datetime.fromisoformat(str(user.created_date)).strftime("%d.%m.%Y %H:%M")
+
+        if id == user_id:
+            my_profile = True
+        else:
+            my_profile = False
+
         return render_template(
-            "settings.html",
+            "profile.html",
             user_authenticated=True,
             username=user.username,
+            registration_date=dt,
+            articles_count=user.article_count,
+            email=user.email,
+            country=countr,
+            about_me=user.about_myself,
+            user_id=id,
+            my_profile=my_profile,
             avatar_url=avatar_url
         )
     else:
@@ -315,6 +366,12 @@ def create_article():
     form = CreateArticleForm()
     user = db_sess.query(User).filter(User.id == user_id).first()
     avatar_url = f"data:image/png;base64,{base64.b64encode(user.avatar).decode('utf-8')}"
+
+    load_dotenv()
+    key = os.getenv("KEY")
+    cipher = Fernet(key)
+
+    user_id = cipher.encrypt(str(user_id).encode()).decode()
 
     if request.method == "POST":
         is_fetch = request.accept_mimetypes['application/json'] or request.headers.get(
@@ -339,10 +396,19 @@ def create_article():
             if is_fetch:
                 return jsonify({"errors": errors}), 400
             else:
-                return render_template("create_article.html", form=form, user_authenticated=True,
-                                       username=user.username, avatar_url=avatar_url,
-                                       style=False, title=title, content=content,
-                                       font=font, comments_allowed=comments_allowed)
+                return render_template(
+                    "create_article.html",
+                    form=form,
+                    user_authenticated=True,
+                    username=user.username,
+                    avatar_url=avatar_url,
+                    style=False,
+                    title=title,
+                    content=content,
+                    font=font,
+                    comments_allowed=comments_allowed,
+                    user_id=user_id
+                )
 
         new_article = Article(
             title=title,
@@ -375,37 +441,27 @@ def create_article():
         username=user.username,
         avatar_url=avatar_url,
         style=False,
+        user_id=user_id,
         form=form
     )
 
 
-@app.route("/profile")
-def profile():
+@app.route('/my_articles', methods=['POST', 'GET'])
+def my_articles():
+    pass
+
+
+@app.route("/settings", methods=["GET", "POST"])
+def settings():
     user_id = session.get('id', None)
     if user_id:
         user = db_sess.query(User).filter(User.id == user_id).first()
         avatar_data = base64.b64encode(user.avatar).decode('utf-8')
         avatar_url = f"data:image/png;base64,{avatar_data}"
-        json_path = os.path.join('static', 'data', 'countries.json')
-        with open(json_path, encoding='utf-8') as f:
-            data = json.load(f)
-        countr = None
-        for country in data:
-            if country['code'] == user.country:
-                countr = country['name']
-                break
-
-        dt = datetime.fromisoformat(str(user.created_date)).strftime("%d.%m.%Y %H:%M")
-
         return render_template(
-            "profile.html",
+            "settings.html",
             user_authenticated=True,
             username=user.username,
-            registration_date=dt,
-            articles_count=0,
-            email=user.email,
-            country=countr,
-            about_me=user.about_myself,
             avatar_url=avatar_url
         )
     else:

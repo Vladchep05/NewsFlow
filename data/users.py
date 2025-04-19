@@ -14,6 +14,7 @@ class User(SqlAlchemyBase):
     created_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.utcnow)
     about_myself = sqlalchemy.Column(sqlalchemy.Text, nullable=True)
     country = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    article_count = sqlalchemy.Column(sqlalchemy.Integer, default=0)
 
     with open('static/img/avatar/default.jpg', 'rb') as file:
         img = file.read()

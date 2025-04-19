@@ -103,15 +103,20 @@ body {
     }
 }
 
-.neon-text {
+.neon-text, .neon-txt {
     text-shadow: 0 0 5px #0ff, 0 0 15px #0ff, 0 0 25px #ff00ff, 0 0 35px #ff00ff;
     font-size: 1.4em;
-    transition: text-shadow 0.3s ease-in-out;
+    transition: transform 0.8s ease, text-shadow 0.4s ease;
+}
+
+/* При наведении на текст */
+.neon-txt, .neon-txt:hover {
+    text-shadow: 0 0 10px #0ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
 }
 
 /* При наведении на текст */
 .neon-text:hover {
-    text-shadow: 0 0 10px #0ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+    transform: scale(1.2);
 }
 
 /* Кнопка с анимацией */
@@ -121,7 +126,7 @@ body {
     background-color: transparent;
     transition: 0.3s ease, transform 0.2s ease;
     border-radius: 50px;
-    padding: 20px 40px;
+    padding: 10px 40px;
     font-weight: bold;
     font-size: 1.2em;
     letter-spacing: 1px;
@@ -153,13 +158,14 @@ body {
     color: #ddd;
     margin-top: 30px;
     border-top: 2px solid #ff00ff;
+    border-bottom: 2px solid #ff00ff;
     padding-top: 15px;
     text-align: left;
     transition: all 0.3s ease;
 }
 
 .about-me h5 {
-    text-shadow: 0 0 10px #ff00ff, 0 0 15px #ff00ff;
+    text-shadow: 0 0 2px #ff00ff, 0 0 10px #ff00ff;
 }
 
 /* Контейнер */
@@ -177,21 +183,76 @@ body {
 }
 
 .neon-info:hover {
-    text-shadow: 0 0 10px #0ff, 0 0 25px #ff00ff, 0 0 35px #ff00ff;
+    text-shadow: 0 0 10px #0ff, 0 0 20px #ff00ff, 0 0 25px #ff00ff;
 }
 
 .neon-info-country {
-    text-shadow: 0 0 5px #ff0000, 0 0 15px #ff0000, 0 0 25px #ff9900;
+    text-shadow: 0 0 5px #ff0000, 0 0 2px #ff9900;
 }
 
 .neon-info-email {
-    text-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00, 0 0 25px #ffff00;
+    text-shadow: 0 0 5px #00ff00, 0 0 2px #ffff00;
 }
 
 .neon-info-articles {
-    text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 25px #ff3333;
+    text-shadow: 0 0 5px #ff00ff, 0 0 2px #ff3333;
 }
 
 .neon-info-date {
-    text-shadow: 0 0 5px #ff6699, 0 0 15px #ff6699, 0 0 25px #ffcc00;
+    text-shadow: 0 0 5px #ff6699, 0 0 2px #ffcc00;
+}
+
+/* Сам модальный контейнер */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1050;
+  inset: 0;
+  overflow: auto;
+}
+
+/* Размывающий оверлей */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Кнопка закрыть */
+.modal .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Изображение поверх оверлея */
+.modal-content {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: 5% auto;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #0ff, 0 0 30px #ff00ff;
+  animation: zoomIn 0.4s ease-in-out;
+}
+
+/* Анимация появления */
+@keyframes zoomIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
